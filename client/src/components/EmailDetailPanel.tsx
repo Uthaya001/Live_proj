@@ -5,6 +5,8 @@ import { Separator } from "@/components/ui/separator";
 import { Reply, Forward, MoreVertical, Star, Trash2 } from "lucide-react";
 import EmailCategoryBadge, { type EmailCategory } from "./EmailCategoryBadge";
 import AiReplySuggestion from "./AiReplySuggestion";
+import EmailReplyBox from "./EmailReplyBox";
+import { useState } from "react";
 
 interface EmailDetailPanelProps {
   from: string;
@@ -41,6 +43,8 @@ export default function EmailDetailPanel({
   onUseAiReply,
   onRegenerateAiReply,
 }: EmailDetailPanelProps) {
+  const [showReplyBox, setShowReplyBox] = useState(false);
+
   const getInitials = (name: string) => {
     return name
       .split(" ")
@@ -48,6 +52,21 @@ export default function EmailDetailPanel({
       .join("")
       .toUpperCase()
       .slice(0, 2);
+  };
+
+  const handleReplyClick = () => {
+    setShowReplyBox(true);
+    onReply?.();
+  };
+
+  const handleSendReply = (message: string) => {
+    console.log("Sending reply:", message);
+    setShowReplyBox(false);
+  };
+
+  const handleUseAiReply = (reply: string) => {
+    setShowReplyBox(true);
+    onUseAiReply?.(reply);
   };
 
   return (
@@ -106,33 +125,41 @@ export default function EmailDetailPanel({
           ))}
         </div>
 
-        {aiSuggestedReply && (
+        {aiSuggestedReply && !showReplyBox && (
           <div className="mt-6">
             <AiReplySuggestion
               suggestedReply={aiSuggestedReply}
-              onUse={onUseAiReply}
+              onUse={handleUseAiReply}
               onRegenerate={onRegenerateAiReply}
             />
           </div>
         )}
       </div>
 
-      <div className="p-4 border-t border-border bg-card/50 backdrop-blur-sm">
-        <div className="flex gap-2 flex-wrap">
-          <Button onClick={onReply} className="gap-2 shadow-sm" data-testid="button-reply">
-            <Reply className="h-4 w-4" />
-            Reply
-          </Button>
-          <Button variant="outline" onClick={onForward} className="gap-2" data-testid="button-forward">
-            <Forward className="h-4 w-4" />
-            Forward
-          </Button>
-          <Button variant="ghost" onClick={onDelete} className="gap-2 ml-auto text-destructive hover:text-destructive" data-testid="button-delete">
-            <Trash2 className="h-4 w-4" />
-            Delete
-          </Button>
+      {showReplyBox ? (
+        <EmailReplyBox
+          onSend={handleSendReply}
+          onCancel={() => setShowReplyBox(false)}
+          defaultValue={showReplyBox && aiSuggestedReply ? aiSuggestedReply : ""}
+        />
+      ) : (
+        <div className="p-4 border-t border-border bg-card/50 backdrop-blur-sm">
+          <div className="flex gap-2 flex-wrap">
+            <Button onClick={handleReplyClick} className="gap-2 shadow-sm" data-testid="button-reply">
+              <Reply className="h-4 w-4" />
+              Reply
+            </Button>
+            <Button variant="outline" onClick={onForward} className="gap-2" data-testid="button-forward">
+              <Forward className="h-4 w-4" />
+              Forward
+            </Button>
+            <Button variant="ghost" onClick={onDelete} className="gap-2 ml-auto text-destructive hover:text-destructive" data-testid="button-delete">
+              <Trash2 className="h-4 w-4" />
+              Delete
+            </Button>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
