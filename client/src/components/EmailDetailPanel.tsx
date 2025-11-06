@@ -52,9 +52,9 @@ export default function EmailDetailPanel({
 
   return (
     <div className="flex flex-col h-full bg-background" data-testid="panel-email-detail">
-      <div className="p-6 border-b border-border">
-        <div className="flex items-start justify-between mb-4 gap-4">
-          <h2 className="text-2xl font-semibold flex-1" data-testid="text-email-subject">
+      <div className="p-6 border-b border-border bg-card/30">
+        <div className="flex items-start justify-between mb-6 gap-4">
+          <h2 className="text-xl font-semibold flex-1 leading-tight" data-testid="text-email-subject">
             {subject}
           </h2>
           <div className="flex gap-1 flex-shrink-0">
@@ -64,7 +64,7 @@ export default function EmailDetailPanel({
               onClick={onToggleStar}
               data-testid="button-star"
             >
-              <Star className={`h-4 w-4 ${isStarred ? "fill-yellow-400 text-yellow-400" : ""}`} />
+              <Star className={`h-4 w-4 ${isStarred ? "fill-yellow-500 text-yellow-500" : ""}`} />
             </Button>
             <Button variant="ghost" size="icon" data-testid="button-more">
               <MoreVertical className="h-4 w-4" />
@@ -72,14 +72,14 @@ export default function EmailDetailPanel({
           </div>
         </div>
 
-        <div className="flex items-center gap-3 mb-4">
-          <Avatar className="h-10 w-10">
-            <AvatarFallback className="bg-primary text-primary-foreground">
+        <div className="flex items-center gap-4 mb-4">
+          <Avatar className="h-12 w-12 ring-2 ring-border">
+            <AvatarFallback className="bg-gradient-to-br from-primary to-primary/80 text-primary-foreground font-semibold">
               {getInitials(fromName || from)}
             </AvatarFallback>
           </Avatar>
           <div className="flex-1 min-w-0">
-            <div className="font-medium text-sm" data-testid="text-sender-name">
+            <div className="font-semibold text-base mb-0.5" data-testid="text-sender-name">
               {fromName || from}
             </div>
             <div className="text-xs text-muted-foreground font-mono truncate" data-testid="text-sender-email">
@@ -89,20 +89,20 @@ export default function EmailDetailPanel({
           {category && <EmailCategoryBadge category={category} />}
         </div>
 
-        <div className="text-xs text-muted-foreground space-y-1">
+        <div className="text-xs text-muted-foreground space-y-1.5 bg-muted/30 rounded-md p-3">
           <div>
-            <span className="font-medium">To:</span> {to}
+            <span className="font-semibold text-foreground">To:</span> <span className="font-mono">{to}</span>
           </div>
           <div data-testid="text-received-time">
-            {formatDistanceToNow(receivedAt, { addSuffix: true })}
+            <span className="font-semibold text-foreground">Received:</span> {formatDistanceToNow(receivedAt, { addSuffix: true })}
           </div>
         </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto p-6">
-        <div className="prose prose-sm max-w-none dark:prose-invert" data-testid="text-email-body">
+      <div className="flex-1 overflow-y-auto p-6 bg-muted/10">
+        <div className="prose prose-sm max-w-none dark:prose-invert bg-background rounded-lg p-6 shadow-sm border border-border" data-testid="text-email-body">
           {body.split("\n").map((paragraph, i) => (
-            <p key={i}>{paragraph}</p>
+            <p key={i} className="leading-relaxed">{paragraph}</p>
           ))}
         </div>
 
@@ -117,9 +117,9 @@ export default function EmailDetailPanel({
         )}
       </div>
 
-      <div className="p-4 border-t border-border bg-card">
+      <div className="p-4 border-t border-border bg-card/50 backdrop-blur-sm">
         <div className="flex gap-2 flex-wrap">
-          <Button onClick={onReply} className="gap-2" data-testid="button-reply">
+          <Button onClick={onReply} className="gap-2 shadow-sm" data-testid="button-reply">
             <Reply className="h-4 w-4" />
             Reply
           </Button>
@@ -127,7 +127,7 @@ export default function EmailDetailPanel({
             <Forward className="h-4 w-4" />
             Forward
           </Button>
-          <Button variant="ghost" onClick={onDelete} className="gap-2 ml-auto" data-testid="button-delete">
+          <Button variant="ghost" onClick={onDelete} className="gap-2 ml-auto text-destructive hover:text-destructive" data-testid="button-delete">
             <Trash2 className="h-4 w-4" />
             Delete
           </Button>

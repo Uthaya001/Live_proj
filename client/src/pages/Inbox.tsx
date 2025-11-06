@@ -169,14 +169,14 @@ export default function Inbox() {
   const othersCount = mockEmails.filter((e) => e.folder === "others").length;
 
   return (
-    <div className="flex h-full">
-      <div className="flex flex-col w-full lg:w-[450px] border-r border-border bg-background">
-        <div className="p-4 border-b border-border">
+    <div className="flex h-full bg-muted/10">
+      <div className="flex flex-col w-full lg:w-[480px] border-r border-border bg-background shadow-sm">
+        <div className="p-4 border-b border-border bg-card/30 backdrop-blur-sm">
           <div className="flex items-center justify-between mb-4">
-            <h1 className="text-lg font-semibold" data-testid="text-page-title">
+            <h1 className="text-xl font-bold" data-testid="text-page-title">
               All Inbox(s)
             </h1>
-            <span className="text-sm text-muted-foreground" data-testid="text-inbox-count">
+            <span className="text-sm text-muted-foreground font-medium" data-testid="text-inbox-count">
               {selectedEmails.size > 0 ? `${selectedEmails.size} selected` : `0/${filteredEmails.length} inboxes selected`}
             </span>
           </div>
@@ -209,21 +209,21 @@ export default function Inbox() {
           </div>
 
           {selectedEmails.size > 0 && (
-            <div className="flex items-center gap-2 p-3 bg-accent border-b border-border">
+            <div className="flex items-center gap-3 p-3 bg-primary/10 border-b border-primary/20">
               <Checkbox
                 checked={selectedEmails.size === filteredEmails.length}
                 onCheckedChange={handleSelectAll}
                 data-testid="checkbox-select-all"
               />
-              <span className="text-sm font-medium">{selectedEmails.size} selected</span>
+              <span className="text-sm font-semibold text-primary">{selectedEmails.size} selected</span>
               <div className="flex gap-1 ml-auto">
-                <Button variant="ghost" size="sm" className="gap-2" data-testid="button-bulk-delete">
+                <Button variant="ghost" size="sm" className="gap-2 text-foreground" data-testid="button-bulk-delete">
                   <Trash2 className="h-4 w-4" />
                 </Button>
-                <Button variant="ghost" size="sm" className="gap-2" data-testid="button-bulk-archive">
+                <Button variant="ghost" size="sm" className="gap-2 text-foreground" data-testid="button-bulk-archive">
                   <Archive className="h-4 w-4" />
                 </Button>
-                <Button variant="ghost" size="sm" className="gap-2" data-testid="button-bulk-tag">
+                <Button variant="ghost" size="sm" className="gap-2 text-foreground" data-testid="button-bulk-tag">
                   <Tag className="h-4 w-4" />
                 </Button>
               </div>

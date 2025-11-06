@@ -61,13 +61,13 @@ export default function AppSidebar({ activeCategory = "Lead", onCategoryChange }
   return (
     <Sidebar data-testid="sidebar-main">
       <SidebarHeader className="p-4 border-b border-sidebar-border">
-        <div className="flex items-center gap-2">
-          <div className="h-8 w-8 rounded-md bg-primary flex items-center justify-center">
+        <div className="flex items-center gap-3">
+          <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center shadow-md">
             <Mail className="h-5 w-5 text-primary-foreground" />
           </div>
           <div>
-            <h2 className="font-semibold text-base">ReachInbox</h2>
-            <p className="text-xs text-muted-foreground">AI Email Manager</p>
+            <h2 className="font-bold text-lg">ReachInbox</h2>
+            <p className="text-xs text-muted-foreground font-medium">AI Email Manager</p>
           </div>
         </div>
       </SidebarHeader>
