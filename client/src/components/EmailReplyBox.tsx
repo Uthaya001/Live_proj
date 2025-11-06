@@ -1,22 +1,26 @@
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Send, X, Paperclip, Smile } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface EmailReplyBoxProps {
   onSend?: (message: string) => void;
   onCancel?: () => void;
   placeholder?: string;
-  defaultValue?: string;
+  initialValue?: string;
 }
 
 export default function EmailReplyBox({
   onSend,
   onCancel,
   placeholder = "Type your reply...",
-  defaultValue = "",
+  initialValue = "",
 }: EmailReplyBoxProps) {
-  const [message, setMessage] = useState(defaultValue);
+  const [message, setMessage] = useState(initialValue);
+
+  useEffect(() => {
+    setMessage(initialValue);
+  }, [initialValue]);
 
   const handleSend = () => {
     if (message.trim()) {

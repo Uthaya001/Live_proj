@@ -64,7 +64,10 @@ export default function EmailDetailPanel({
     setShowReplyBox(false);
   };
 
+  const [replyText, setReplyText] = useState("");
+
   const handleUseAiReply = (reply: string) => {
+    setReplyText(reply);
     setShowReplyBox(true);
     onUseAiReply?.(reply);
   };
@@ -139,8 +142,11 @@ export default function EmailDetailPanel({
       {showReplyBox ? (
         <EmailReplyBox
           onSend={handleSendReply}
-          onCancel={() => setShowReplyBox(false)}
-          defaultValue={showReplyBox && aiSuggestedReply ? aiSuggestedReply : ""}
+          onCancel={() => {
+            setShowReplyBox(false);
+            setReplyText("");
+          }}
+          initialValue={replyText}
         />
       ) : (
         <div className="p-4 border-t border-border bg-card/50 backdrop-blur-sm">
